@@ -30,7 +30,7 @@ public class HomeController {
     }
 
     @GetMapping("/calc")
-    public String caclulate(
+    public String calculate(
             @RequestParam double a,
             @RequestParam double b,
             @RequestParam(defaultValue = "add") String op,
@@ -44,5 +44,10 @@ public class HomeController {
                 .build();
         model.addAttribute("calculatorData", calculatorData);
         return "calculator";
+    }
+
+    @GetMapping("/calculator-form")
+    public String calculatorForm(){
+        return "calculator-form";
     }
 }
