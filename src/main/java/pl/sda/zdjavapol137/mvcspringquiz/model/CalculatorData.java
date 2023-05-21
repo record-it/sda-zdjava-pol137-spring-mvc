@@ -1,7 +1,6 @@
 package pl.sda.zdjavapol137.mvcspringquiz.model;
 
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 
 @Getter
@@ -21,6 +20,16 @@ public class CalculatorData {
             case "mul" -> a * b;
             case "div" -> a / b;
             default -> throw new IllegalArgumentException("Nieznany operator!");
+        };
+    }
+
+    public String getOperator(){
+        return switch (operator){
+            case "add" -> "+";
+            case "sub" -> "-";
+            case "mul" -> "*";
+            case "div" -> "/";
+            default -> "?";
         };
     }
 }
