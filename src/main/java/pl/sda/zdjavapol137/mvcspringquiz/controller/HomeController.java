@@ -50,4 +50,15 @@ public class HomeController {
     public String calculatorForm(){
         return "calculator-form";
     }
+
+    @GetMapping("/power-form")
+    public String powerForm(){
+        return "power-form";
+    }
+
+    @GetMapping("/power")
+    public String power(@RequestParam double a, Model model){
+        model.addAttribute("power", a * a);
+        return "power";
+    }
 }
