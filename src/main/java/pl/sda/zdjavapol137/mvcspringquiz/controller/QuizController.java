@@ -24,7 +24,7 @@ public class QuizController {
                 Quiz
                         .builder()
                         .id(1)
-                        .title("Matematyka")
+                        .title("Matematyka - dodawanie <script>alert('Hello');</script>")
                         .question("2 + 5")
                         .correctAnswers(List.of("7"))
                         .incorrectAnswers(List.of("6", "8", "9"))
@@ -34,7 +34,7 @@ public class QuizController {
                 Quiz
                         .builder()
                         .id(2)
-                        .title("Matematyka")
+                        .title("Matematyka - mnożenie")
                         .question("2 * 5")
                         .correctAnswers(List.of("10"))
                         .incorrectAnswers(List.of("20", "5", "12"))
@@ -44,12 +44,18 @@ public class QuizController {
                 Quiz
                         .builder()
                         .id(3)
-                        .title("Matematyka")
+                        .title("Matematyka - dzielenie")
                         .question("9 / 3")
                         .correctAnswers(List.of("3"))
                         .incorrectAnswers(List.of("2", "4", "1"))
                         .build()
         );
+    }
+
+    @GetMapping("/index")
+    public String quizIndex(Model model){
+        model.addAttribute("quizzes", quizzes.values());
+        return "quiz/index";
     }
 
     @GetMapping("/fill")

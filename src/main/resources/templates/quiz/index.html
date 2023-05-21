@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista pytań</title>
+</head>
+<body>
+    <div>
+        <ul>
+<!--        Wyświetl listę tytułów quizów-->
+        <li th:each="quiz:${quizzes}">
+            <a th:href="@{/quiz/fill(id=${quiz.id})}" th:text="${quiz.title}"></a>
+        </li>
+        </ul>
+    </div>
+</body>
+</html>
