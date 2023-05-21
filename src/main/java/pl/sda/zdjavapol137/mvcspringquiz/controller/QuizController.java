@@ -1,10 +1,13 @@
 package pl.sda.zdjavapol137.mvcspringquiz.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.sda.zdjavapol137.mvcspringquiz.dto.RequestQuizAnswerDto;
+import pl.sda.zdjavapol137.mvcspringquiz.model.FillQuizViewModel;
 import pl.sda.zdjavapol137.mvcspringquiz.model.Quiz;
 
 import java.util.HashMap;
@@ -50,12 +53,26 @@ public class QuizController {
     }
 
     @GetMapping("/fill")
-    public String fillQuizForm(@RequestParam Long id){
+    public String fillQuizForm(@RequestParam Long id, Model model){
+        var quiz = quizzes.get(id);
+        if (quiz == null){
+            model.addAttribute("message", "Brak quizu o id: " + id);
+            return "error";
+        }
+        model.addAttribute("quiz", FillQuizViewModel.from(quiz));
         return "quiz/fill-form";
     }
 
     @PostMapping("/fill")
-    public String getFillResult(){
+    public String getFillResult(RequestQuizAnswerDto dto, Model model){
+        var quiz = quizzes.get(dto.getId());
+        if (quiz == null){
+            model.addAttribute("message", "Brak quizu o id: " + dto.getId());
+            return "error";
+        }
+        final boolean correct = quiz.isCorrect(List.of(dto.getAnswer()));
+        model.addAttribute("isCorrect", correct);
+        model.addAttribute("quiz", quiz);
         return "quiz/fill-result";
     }
 }

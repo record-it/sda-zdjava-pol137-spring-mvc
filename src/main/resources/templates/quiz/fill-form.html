@@ -5,6 +5,17 @@
     <title>Title</title>
 </head>
 <body>
-
+    <H1 th:text="${quiz.title}">Tytuł</H1>
+    <h3 th:text="${quiz.question}">Pytanie</h3>
+    <form action="/quiz/fill" method="post">
+        <input name="id" type="hidden" th:value="${quiz.id}"/>
+        <fieldset>
+            <div th:each="option:${quiz.options}">
+                <label th:for="${option}" th:text="${option}"></label>
+                <input th:id="${option}" name="answer" th:value="${option}" type="radio"/>
+            </div>
+        </fieldset>
+        <button type="submit">Zapisz</button>
+    </form>
 </body>
 </html>

@@ -5,6 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-
+<H3 th:text="${quiz.question}"></H3>
+<H1 th:if="${isCorrect}">Twoja odpowiedź jest poprawna. Brawo!!!!</H1>
+<H1 th:unless="${isCorrect}">Twoja odpowiedź jest niepoprawna. UUUU!!</H1>
 </body>
 </html>
