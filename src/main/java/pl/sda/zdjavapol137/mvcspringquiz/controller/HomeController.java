@@ -2,9 +2,12 @@ package pl.sda.zdjavapol137.mvcspringquiz.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import pl.sda.zdjavapol137.mvcspringquiz.dto.RequestCalculatorDto;
 import pl.sda.zdjavapol137.mvcspringquiz.model.CalculatorData;
 
 @Controller
@@ -31,16 +34,14 @@ public class HomeController {
 
     @GetMapping("/calc")
     public String calculate(
-            @RequestParam double a,
-            @RequestParam double b,
-            @RequestParam(defaultValue = "add") String op,
+            @Validated RequestCalculatorDto dto,
             Model model
     ){
         final CalculatorData calculatorData = CalculatorData
                 .builder()
-                .operator(op)
-                .a(a)
-                .b(b)
+                .operator(dto.getOp())
+                .a(dto.getA())
+                .b(dto.getB())
                 .build();
         model.addAttribute("calculatorData", calculatorData);
         return "calculator";
