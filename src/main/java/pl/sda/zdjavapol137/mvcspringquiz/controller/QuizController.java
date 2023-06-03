@@ -8,77 +8,49 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.sda.zdjavapol137.mvcspringquiz.dto.RequestQuizAnswerDto;
 import pl.sda.zdjavapol137.mvcspringquiz.model.FillQuizViewModel;
-import pl.sda.zdjavapol137.mvcspringquiz.model.Quiz;
+import pl.sda.zdjavapol137.mvcspringquiz.service.AdminQuizService;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/quiz")
 public class QuizController {
-    private Map<Long, Quiz> quizzes = new HashMap<>();
 
-    public QuizController() {
-        quizzes.put(1L,
-                Quiz
-                        .builder()
-                        .id(1)
-                        .title("Matematyka - dodawanie <script>alert('Hello');</script>")
-                        .question("2 + 5")
-                        .correctAnswers(List.of("7"))
-                        .incorrectAnswers(List.of("6", "8", "9"))
-                        .build()
-                );
-        quizzes.put(2L,
-                Quiz
-                        .builder()
-                        .id(2)
-                        .title("Matematyka - mnożenie")
-                        .question("2 * 5")
-                        .correctAnswers(List.of("10"))
-                        .incorrectAnswers(List.of("20", "5", "12"))
-                        .build()
-        );
-        quizzes.put(3L,
-                Quiz
-                        .builder()
-                        .id(3)
-                        .title("Matematyka - dzielenie")
-                        .question("9 / 3")
-                        .correctAnswers(List.of("3"))
-                        .incorrectAnswers(List.of("2", "4", "1"))
-                        .build()
-        );
+    // wstrzyknij QuizAdminService
+    private final AdminQuizService quizService;
+
+    public QuizController(AdminQuizService quizService) {
+        this.quizService = quizService;
     }
 
     @GetMapping("/index")
     public String quizIndex(Model model){
-        model.addAttribute("quizzes", quizzes.values());
+        model.addAttribute("quizzes", quizService.findAllQuizzes());
         return "quiz/index";
     }
 
     @GetMapping("/fill")
     public String fillQuizForm(@RequestParam Long id, Model model){
-        var quiz = quizzes.get(id);
-        if (quiz == null){
+        var quiz = quizService.findQuizById(id);
+        if (quiz.isEmpty()){
             model.addAttribute("message", "Brak quizu o id: " + id);
             return "error";
         }
-        model.addAttribute("quiz", FillQuizViewModel.from(quiz));
+        model.addAttribute("quiz", FillQuizViewModel.from(quiz.get()));
         return "quiz/fill-form";
     }
 
     @PostMapping("/fill")
     public String getFillResult(RequestQuizAnswerDto dto, Model model){
-        var quiz = quizzes.get(dto.getId());
-        if (quiz == null){
+        var quiz = quizService.findQuizById(dto.getId());
+        if (quiz.isEmpty()){
             model.addAttribute("message", "Brak quizu o id: " + dto.getId());
             return "error";
         }
-        final boolean correct = quiz.isCorrect(List.of(dto.getAnswer()));
+
+        final boolean correct = quiz.get().isCorrect(List.of(dto.getAnswer()));
         model.addAttribute("isCorrect", correct);
-        model.addAttribute("quiz", quiz);
+        model.addAttribute("quiz", quiz.get());
         return "quiz/fill-result";
     }
 }

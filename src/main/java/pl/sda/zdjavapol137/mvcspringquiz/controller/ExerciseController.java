@@ -2,9 +2,9 @@ package pl.sda.zdjavapol137.mvcspringquiz.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.io.IOException;
 import java.io.PrintWriter;

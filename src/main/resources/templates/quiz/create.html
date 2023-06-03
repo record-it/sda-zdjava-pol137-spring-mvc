@@ -5,15 +5,22 @@
     <title>Title</title>
 </head>
 <body>
-    <form action="/admin/quiz/create" method="post">
-        <input type="text" th:name="title" /> <br>
-        <input type="text" th:name="question" /> <br>
+    <form th:action="@{/admin/quiz/create}" method="post" th:object="${quizViewModel}">
+        <label>Tytuł</label>
+        <input type="text" th:field="*{title}" /> <br>
+        <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Errors</span>
+        <label>Treść pytania</label>
+        <input type="text" th:field="*{question}" /> <br>
+        <span th:if="${#fields.hasErrors('question')}" th:errors="*{question}">Errors</span>
+        <label>Odpowiedzi</label>
         <fieldset>
-            <input type="checkbox" name="correctOptions" value="1"/> <input type="text" th:name="options" /> <br>
-            <input type="checkbox" name="correctOptions" value="2"/> <input type="text" th:name="options" /> <br>
-            <input type="checkbox" name="correctOptions" value="3"/> <input type="text" th:name="options" /> <br>
-            <input type="checkbox" name="correctOptions" value="4"/> <input type="text" th:name="options" /> <br>
+            <input type="checkbox" th:field="*{correctOptions}" value="1"/> <input type="text" th:field="*{options}" /> <br>
+            <input type="checkbox" th:field="*{correctOptions}" value="2"/> <input type="text" th:field="*{options}" /> <br>
+            <input type="checkbox" th:field="*{correctOptions}" value="3"/> <input type="text" th:field="*{options}" /> <br>
+            <input type="checkbox" th:field="*{correctOptions}" value="4"/> <input type="text" th:field="*{options}" /> <br>
         </fieldset>
+        <span th:if="${#fields.hasErrors('options')}" th:errors="*{options}">Errors</span>
+        <span th:if="${#fields.hasErrors('correctOptions')}" th:errors="*{correctOptions}">Errors</span>
         <button type="submit">Zapisz</button>
     </form>
 </body>
