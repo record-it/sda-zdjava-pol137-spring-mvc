@@ -1,9 +1,11 @@
 package pl.sda.zdjavapol137.mvcspringquiz.repository;
 
+import org.springframework.stereotype.Component;
 import pl.sda.zdjavapol137.mvcspringquiz.model.Quiz;
 
 import java.util.*;
 
+@Component
 public class QuizRepositoryInMemory {
     private final Map<Long, Quiz> map;
     private int index = 0;
