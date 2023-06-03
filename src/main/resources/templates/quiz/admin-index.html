@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista quizów</title>
+</head>
+<body>
+    <h1>Lista quizów</h1>
+    <div>
+        <table>
+            <!--        Wyświetl listę tytułów quizów-->
+            <tr th:each="quiz:${quizzes}">
+                <td><a th:href="@{/admin/quiz/details(id=${quiz.id})}" th:text="${quiz.title}"></a></td>
+                <td><a th:href="@{/admin/quiz/delete(id=${quiz.id})}">Usuń</a></td>
+                <td><a th:href="@{/admin/quiz/update(id=${quiz.id})}">Edytuj</a></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

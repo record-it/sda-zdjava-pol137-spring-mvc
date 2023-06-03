@@ -36,11 +36,18 @@ public class QuizAdminController {
 
     @PostMapping("/create")
     public String createQuiz(
-            @Valid QuizViewModel quizViewModel,
+            @ModelAttribute @Valid QuizViewModel quizViewModel,
             Model model){
         final Quiz quiz = QuizMapper.mapToQuiz(quizViewModel);
         quizService.saveQuiz(quiz);
         model.addAttribute("quizzes", quizService.findAllQuizzes());
         return "/quiz/index";
+    }
+
+    @GetMapping("/index")
+    public String quizIndex(Model model){
+        //przekaż do modelu atrybut "quizzes" z listą wszystkich quizów
+        model.addAttribute("quizzes", quizService.findAllQuizzes());
+        return "/quiz/admin-index";
     }
 }
