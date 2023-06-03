@@ -49,7 +49,7 @@ public class QuizAdminController {
         return "/quiz/admin-index";
     }
 
-    //TODO zaimplemenyuj poniższą metodę wyświetlającą szczegóły zadania o id podanym w query
+    //TODO zaimplemenuj poniższą metodę wyświetlającą szczegóły zadania o id podanym w query
     // np. /admin/quiz/details?id=2
     // 1. uzupełnij parametry metody quizDetails
     // 2. Pobrać z serwisu dany quiz

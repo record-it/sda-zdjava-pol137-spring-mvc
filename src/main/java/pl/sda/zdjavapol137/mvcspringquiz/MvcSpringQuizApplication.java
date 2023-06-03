@@ -3,7 +3,9 @@ package pl.sda.zdjavapol137.mvcspringquiz;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import pl.sda.zdjavapol137.mvcspringquiz.entity.Category;
 import pl.sda.zdjavapol137.mvcspringquiz.model.Quiz;
+import pl.sda.zdjavapol137.mvcspringquiz.repository.CategoryRepository;
 import pl.sda.zdjavapol137.mvcspringquiz.service.AdminQuizService;
 
 import java.util.List;
@@ -11,9 +13,10 @@ import java.util.List;
 @SpringBootApplication
 public class MvcSpringQuizApplication implements CommandLineRunner {
     private final AdminQuizService service;
-
-    public MvcSpringQuizApplication(AdminQuizService service) {
+    private final CategoryRepository categoryRepository;
+    public MvcSpringQuizApplication(AdminQuizService service, CategoryRepository categoryRepository) {
         this.service = service;
+        this.categoryRepository = categoryRepository;
     }
 
     public static void main(String[] args) {
@@ -49,5 +52,14 @@ public class MvcSpringQuizApplication implements CommandLineRunner {
                         .title("Dzielenie")
                         .build()
         );
+        if (categoryRepository.count() < 1) {
+            categoryRepository.save(
+                    Category
+                            .builder()
+                            .rating(3)
+                            .name("Matematyka")
+                            .build()
+            );
+        }
     }
 }
