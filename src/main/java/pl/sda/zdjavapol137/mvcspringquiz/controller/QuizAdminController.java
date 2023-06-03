@@ -67,12 +67,25 @@ public class QuizAdminController {
     }
 
     @GetMapping("/update")
-    public String updateQuiz(@RequestParam long id, Model model){
+    public String updateQuizFrom(@RequestParam long id, Model model){
         final Optional<Quiz> optionalQuiz = quizService.findQuizById(id);
         if (optionalQuiz.isEmpty()){
             return "error";
         }
         model.addAttribute("quiz", optionalQuiz.get());
         return "/quiz/update-form";
+    }
+
+    @PostMapping("/update")
+    public String updateQuiz(@ModelAttribute Quiz updatedQuiz, Model model){
+        final Optional<Quiz> optionalQuiz = quizService.findQuizById(updatedQuiz.getId());
+        if (optionalQuiz.isEmpty()){
+            model.addAttribute("message", "Brak quiz o id: " + updatedQuiz.getId());
+            return "error";
+        }
+        updatedQuiz.setCorrectAnswers(optionalQuiz.get().getCorrectAnswers());
+        updatedQuiz.setIncorrectAnswers(optionalQuiz.get().getIncorrectAnswers());
+        quizService.updateQuiz(updatedQuiz);
+        return "redirect:/admin/quiz/index";
     }
 }

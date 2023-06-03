@@ -6,13 +6,14 @@
 </head>
 <body>
 <form th:action="@{/admin/quiz/update}" method="post" th:object="${quiz}">
+    <input type="hidden" th:field="*{id}"/>
     <label>Tytuł</label>
     <input type="text" th:field="*{title}" /> <br>
     <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Errors</span>
     <label>Treść pytania</label>
     <input type="text" th:field="*{question}" /> <br>
     <span th:if="${#fields.hasErrors('question')}" th:errors="*{question}">Errors</span>
-    <button type="submit">Zapisz</button>
+    <button type="submit">Aktualizuj</button>
 </form>
 </body>
 </html>
