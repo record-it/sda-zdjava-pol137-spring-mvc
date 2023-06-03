@@ -5,15 +5,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.sda.zdjavapol137.mvcspringquiz.mapper.QuizMapper;
 import pl.sda.zdjavapol137.mvcspringquiz.model.Quiz;
 import pl.sda.zdjavapol137.mvcspringquiz.model.QuizViewModel;
 import pl.sda.zdjavapol137.mvcspringquiz.service.AdminQuizService;
 
+import java.util.Optional;
 
 
 @Controller
@@ -49,5 +47,32 @@ public class QuizAdminController {
         //przekaż do modelu atrybut "quizzes" z listą wszystkich quizów
         model.addAttribute("quizzes", quizService.findAllQuizzes());
         return "/quiz/admin-index";
+    }
+
+    //TODO zaimplemenyuj poniższą metodę wyświetlającą szczegóły zadania o id podanym w query
+    // np. /admin/quiz/details?id=2
+    // 1. uzupełnij parametry metody quizDetails
+    // 2. Pobrać z serwisu dany quiz
+    // 3. Przekazać quiz jako atrybut do widoku
+    // 4. utworzyć widok szczegołów
+    @GetMapping("/details")
+    public String quizDetails(){
+        return "";
+    }
+
+    @GetMapping("/delete")
+    public String deleteQuiz(@RequestParam long id){
+        quizService.deleteQuizById(id);
+        return "redirect:/admin/quiz/index";
+    }
+
+    @GetMapping("/update")
+    public String updateQuiz(@RequestParam long id, Model model){
+        final Optional<Quiz> optionalQuiz = quizService.findQuizById(id);
+        if (optionalQuiz.isEmpty()){
+            return "error";
+        }
+        model.addAttribute("quiz", optionalQuiz.get());
+        return "/quiz/update-form";
     }
 }

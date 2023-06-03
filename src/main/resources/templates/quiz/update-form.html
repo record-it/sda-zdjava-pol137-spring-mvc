@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/admin/quiz/update}" method="post" th:object="${quiz}">
+    <label>Tytuł</label>
+    <input type="text" th:field="*{title}" /> <br>
+    <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Errors</span>
+    <label>Treść pytania</label>
+    <input type="text" th:field="*{question}" /> <br>
+    <span th:if="${#fields.hasErrors('question')}" th:errors="*{question}">Errors</span>
+    <button type="submit">Zapisz</button>
+</form>
+</body>
+</html>
