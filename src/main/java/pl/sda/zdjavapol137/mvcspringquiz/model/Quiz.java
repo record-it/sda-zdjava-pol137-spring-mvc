@@ -1,5 +1,7 @@
 package pl.sda.zdjavapol137.mvcspringquiz.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.Builder;
 import lombok.Data;
 

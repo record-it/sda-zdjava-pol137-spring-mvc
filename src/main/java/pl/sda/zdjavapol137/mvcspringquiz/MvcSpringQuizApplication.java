@@ -5,9 +5,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import pl.sda.zdjavapol137.mvcspringquiz.entity.Answer;
 import pl.sda.zdjavapol137.mvcspringquiz.entity.Category;
+import pl.sda.zdjavapol137.mvcspringquiz.entity.QuizEntity;
 import pl.sda.zdjavapol137.mvcspringquiz.model.Quiz;
 import pl.sda.zdjavapol137.mvcspringquiz.repository.AnswerRepository;
 import pl.sda.zdjavapol137.mvcspringquiz.repository.CategoryRepository;
+import pl.sda.zdjavapol137.mvcspringquiz.repository.QuizRespository;
 import pl.sda.zdjavapol137.mvcspringquiz.service.AdminQuizService;
 
 import java.time.LocalDateTime;
@@ -17,11 +19,13 @@ import java.util.List;
 public class MvcSpringQuizApplication implements CommandLineRunner {
     private final AdminQuizService service;
     private final CategoryRepository categoryRepository;
+    private final QuizRespository quizRespository;
 
     private final AnswerRepository answerRepository;
-    public MvcSpringQuizApplication(AdminQuizService service, CategoryRepository categoryRepository, AnswerRepository answerRepository) {
+    public MvcSpringQuizApplication(AdminQuizService service, CategoryRepository categoryRepository, QuizRespository quizRespository, AnswerRepository answerRepository) {
         this.service = service;
         this.categoryRepository = categoryRepository;
+        this.quizRespository = quizRespository;
         this.answerRepository = answerRepository;
     }
 
@@ -84,6 +88,29 @@ public class MvcSpringQuizApplication implements CommandLineRunner {
                 );
             } catch (Exception e){
                 System.out.println("Bład e: " + e.getMessage());
+            }
+        }
+        if (quizRespository.count() < 1){
+            quizRespository.save(
+                    QuizEntity
+                            .builder()
+                            .title("Dodawanie")
+                            .question("2 + 4")
+                            .correctAnswers("6")
+                            .incorrectAnswers("3|4|7")
+                            .build()
+            );
+        }
+
+        final List<QuizEntity> all = quizRespository.findAll();
+        for(var q: all){
+            System.out.println(q.getTitle());
+            System.out.println(q.getQuestion());
+            for(var a: q.getIncorrectAnswers()){
+                System.out.println(a);
+            }
+            for(var a: q.getCorrectAnswers()){
+                System.out.println(a);
             }
         }
     }
