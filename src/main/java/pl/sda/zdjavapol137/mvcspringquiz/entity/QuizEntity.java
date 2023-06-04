@@ -29,6 +29,9 @@ public class QuizEntity {
 
     private String incorrectAnswers;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Answer> answers;
+
     public void setCorrectAnswers(List<String> items){
         correctAnswers = items.stream().collect(Collectors.joining("|"));
     }

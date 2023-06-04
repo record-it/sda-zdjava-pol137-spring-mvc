@@ -1,9 +1,6 @@
 package pl.sda.zdjavapol137.mvcspringquiz.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,6 +17,9 @@ public class Answer {
     private long id;
 
     private String userAnswer;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    private QuizEntity quiz;
 
     private LocalDateTime created;
 }
