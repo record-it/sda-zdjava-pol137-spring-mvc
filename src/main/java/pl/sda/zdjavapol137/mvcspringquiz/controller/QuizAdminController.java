@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import pl.sda.zdjavapol137.mvcspringquiz.mapper.QuizMapper;
 import pl.sda.zdjavapol137.mvcspringquiz.model.Quiz;
 import pl.sda.zdjavapol137.mvcspringquiz.model.QuizViewModel;
@@ -16,7 +18,12 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin/quiz")
-public class QuizAdminController {
+public class QuizAdminController implements WebMvcConfigurer {
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/results").setViewName("results");
+    }
 
     private final AdminQuizService quizService;
 
@@ -34,8 +41,12 @@ public class QuizAdminController {
 
     @PostMapping("/create")
     public String createQuiz(
-            @ModelAttribute @Valid QuizViewModel quizViewModel,
+            @Valid QuizViewModel quizViewModel,
+            BindingResult errors,
             Model model){
+        if (errors.hasErrors()){
+            return "/quiz/create";
+        }
         final Quiz quiz = QuizMapper.mapToQuiz(quizViewModel);
         quizService.saveQuiz(quiz);
         model.addAttribute("quizzes", quizService.findAllQuizzes());
