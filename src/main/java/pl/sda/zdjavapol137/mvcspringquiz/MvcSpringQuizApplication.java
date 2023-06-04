@@ -6,11 +6,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import pl.sda.zdjavapol137.mvcspringquiz.entity.Answer;
 import pl.sda.zdjavapol137.mvcspringquiz.entity.Category;
 import pl.sda.zdjavapol137.mvcspringquiz.entity.QuizEntity;
+import pl.sda.zdjavapol137.mvcspringquiz.entity.User;
 import pl.sda.zdjavapol137.mvcspringquiz.mapper.QuizMapper;
 import pl.sda.zdjavapol137.mvcspringquiz.model.Quiz;
 import pl.sda.zdjavapol137.mvcspringquiz.repository.AnswerRepository;
 import pl.sda.zdjavapol137.mvcspringquiz.repository.CategoryRepository;
-import pl.sda.zdjavapol137.mvcspringquiz.repository.QuizRespository;
+import pl.sda.zdjavapol137.mvcspringquiz.repository.QuizRepository;
+import pl.sda.zdjavapol137.mvcspringquiz.repository.UserRepository;
 import pl.sda.zdjavapol137.mvcspringquiz.service.AdminQuizService;
 
 import java.time.LocalDateTime;
@@ -21,13 +23,15 @@ import java.util.Optional;
 public class MvcSpringQuizApplication implements CommandLineRunner {
     private final AdminQuizService service;
     private final CategoryRepository categoryRepository;
-    private final QuizRespository quizRespository;
-
+    private final QuizRepository quizRepository;
+    private final UserRepository userRepository;
     private final AnswerRepository answerRepository;
-    public MvcSpringQuizApplication(AdminQuizService service, CategoryRepository categoryRepository, QuizRespository quizRespository, AnswerRepository answerRepository) {
+
+    public MvcSpringQuizApplication(AdminQuizService service, CategoryRepository categoryRepository, QuizRepository quizRepository, UserRepository userRepository, AnswerRepository answerRepository) {
         this.service = service;
         this.categoryRepository = categoryRepository;
-        this.quizRespository = quizRespository;
+        this.quizRepository = quizRepository;
+        this.userRepository = userRepository;
         this.answerRepository = answerRepository;
     }
 
@@ -70,7 +74,7 @@ public class MvcSpringQuizApplication implements CommandLineRunner {
                         Category
                                 .builder()
                                 .rating(3)
-                                .name(null)
+                                .name("Matematyka")
                                 .build()
                 );
             } catch (Exception e) {
@@ -78,8 +82,8 @@ public class MvcSpringQuizApplication implements CommandLineRunner {
             }
 
         }
-        if (answerRepository.count() < 1){
-            try{
+        if (answerRepository.count() < 1) {
+            try {
                 answerRepository.save(
                         Answer
                                 .builder()
@@ -89,12 +93,12 @@ public class MvcSpringQuizApplication implements CommandLineRunner {
                                 .build()
 
                 );
-            } catch (Exception e){
+            } catch (Exception e) {
                 System.out.println("Bład e: " + e.getMessage());
             }
         }
         final Optional<Answer> optionalAnswer = answerRepository.findById(1L);
-        if (optionalAnswer.isEmpty()){
+        if (optionalAnswer.isEmpty()) {
             System.out.println("Brak odpowiedzi");
             return;
         }
@@ -102,9 +106,29 @@ public class MvcSpringQuizApplication implements CommandLineRunner {
         final Quiz quiz1 = QuizMapper.mapFromEntity(answer.getQuiz());
         var isCorrect = quiz1.isCorrect(List.of(answer.getUserAnswer()));
         System.out.println("Czy poprawna? " + isCorrect);
-//        answerRepository.deleteById(1L);
-//        service.deleteQuizById(1);
-//        System.out.println(answerRepository.findById(1L));
+        var user = userRepository.save(
+                User
+                        .builder()
+                        .email("adam@sda.pl")
+                        .password("1234")
+                        .build()
+        );
+        final Optional<QuizEntity> optionalQuiz = quizRepository.findById(1L);
+        optionalQuiz.ifPresent(q -> {
+            user.setCretedQuizzes(List.of(q));
+            var category = categoryRepository.findById(1L).get();
+            q.setCategory(category);
+            quizRepository.save(q);
+            userRepository.save(user);
+        });
+
+        var quizzes = quizRepository
+                .findByCategoryOrderById(categoryRepository.findById(1L).get());
+        System.out.println("Lista quizów kategorii o id 1");
+        System.out.println(quizzes);
+        //        answerRepository.deleteById(1L);
+        //        service.deleteQuizById(1);
+        //        System.out.println(answerRepository.findById(1L));
 
     }
 }

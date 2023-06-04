@@ -6,23 +6,27 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "categories")
+@Table(name = "APP_USERS")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Category implements Serializable {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    public long id;
 
-    @Column(nullable = false, length = 50, unique = true)
-    private String name;
+    @Column(unique = true)
+    public String email;
 
-    @Column(nullable = false)
-    private int rating;
+    public String password;
+
+    @ManyToMany
+    private List<QuizEntity> cretedQuizzes;
+
+//    @OneToMany
+//    private List<Answer> answers;
 }
