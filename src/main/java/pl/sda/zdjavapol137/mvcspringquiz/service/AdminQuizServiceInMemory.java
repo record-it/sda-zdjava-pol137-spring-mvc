@@ -3,11 +3,10 @@ package pl.sda.zdjavapol137.mvcspringquiz.service;
 import org.springframework.stereotype.Service;
 import pl.sda.zdjavapol137.mvcspringquiz.model.Quiz;
 import pl.sda.zdjavapol137.mvcspringquiz.repository.QuizRepositoryInMemory;
-
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Service("InMemory")
 public class AdminQuizServiceInMemory implements AdminQuizService{
     private final QuizRepositoryInMemory repository;
 

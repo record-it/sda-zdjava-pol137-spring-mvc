@@ -1,5 +1,6 @@
 package pl.sda.zdjavapol137.mvcspringquiz.controller;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pl.sda.zdjavapol137.mvcspringquiz.dto.RequestQuizAnswerDto;
 import pl.sda.zdjavapol137.mvcspringquiz.model.FillQuizViewModel;
 import pl.sda.zdjavapol137.mvcspringquiz.service.AdminQuizService;
+import pl.sda.zdjavapol137.mvcspringquiz.service.AdminQuizServiceInMemory;
 
 import java.util.List;
 

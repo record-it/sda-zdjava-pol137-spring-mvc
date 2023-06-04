@@ -1,5 +1,6 @@
 package pl.sda.zdjavapol137.mvcspringquiz.mapper;
 
+import pl.sda.zdjavapol137.mvcspringquiz.entity.QuizEntity;
 import pl.sda.zdjavapol137.mvcspringquiz.model.Quiz;
 import pl.sda.zdjavapol137.mvcspringquiz.model.QuizViewModel;
 
@@ -24,6 +25,27 @@ public class QuizMapper {
                 .title(model.getTitle())
                 .incorrectAnswers(incorrectAnswers)
                 .correctAnswers(correctAnswers)
+                .build();
+    }
+
+    public static QuizEntity mapToEntity(Quiz quiz){
+        var entity = new QuizEntity();
+        entity.setId(quiz.getId());
+        entity.setTitle(quiz.getTitle());
+        entity.setQuestion(quiz.getQuestion());
+        entity.setCorrectAnswers(quiz.getCorrectAnswers());
+        entity.setIncorrectAnswers(quiz.getIncorrectAnswers());
+        return entity;
+    }
+
+    public static Quiz mapFromEntity(QuizEntity entity){
+        return Quiz
+                .builder()
+                .title(entity.getTitle())
+                .id(entity.getId())
+                .incorrectAnswers(entity.getIncorrectAnswers())
+                .correctAnswers(entity.getCorrectAnswers())
+                .question(entity.getQuestion())
                 .build();
     }
 }

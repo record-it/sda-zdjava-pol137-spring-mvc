@@ -12,6 +12,7 @@ import pl.sda.zdjavapol137.mvcspringquiz.mapper.QuizMapper;
 import pl.sda.zdjavapol137.mvcspringquiz.model.Quiz;
 import pl.sda.zdjavapol137.mvcspringquiz.model.QuizViewModel;
 import pl.sda.zdjavapol137.mvcspringquiz.service.AdminQuizService;
+import pl.sda.zdjavapol137.mvcspringquiz.service.AdminQuizServiceJpa;
 
 import java.util.Optional;
 
@@ -19,11 +20,6 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/admin/quiz")
 public class QuizAdminController implements WebMvcConfigurer {
-
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/results").setViewName("results");
-    }
 
     private final AdminQuizService quizService;
 
