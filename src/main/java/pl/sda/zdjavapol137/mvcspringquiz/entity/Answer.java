@@ -22,4 +22,7 @@ public class Answer {
     private QuizEntity quiz;
 
     private LocalDateTime created;
+
+    @ManyToOne
+    private User user;
 }
