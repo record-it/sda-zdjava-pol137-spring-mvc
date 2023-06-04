@@ -1,17 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Lista pytań</title>
+<head th:insert="/index.html::head('Lista quizów')">
 </head>
 <body>
-    <div>
-        <ul>
+<nav th:insert="/index.html::nav"></nav>
+    <div class="container-sm">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    Tytuł
+                </th>
+                <th>
+                    Kategoria
+                </th>
+            </tr>
+            </thead>
 <!--        Wyświetl listę tytułów quizów-->
-        <li th:each="quiz:${quizzes}">
-            <a th:href="@{/quiz/fill(id=${quiz.id})}" th:text="${quiz.title}"></a>
-        </li>
-        </ul>
+        <tr th:each="quiz:${quizzes}">
+            <td>
+                <a th:href="@{/quiz/fill(id=${quiz.id})}" th:text="${quiz.title}"></a>
+            </td>
+            <td>
+                <span th:text="${quiz.categoryId}"></span>
+            </td>
+        </tr>
+        </table>
     </div>
 </body>
 </html>

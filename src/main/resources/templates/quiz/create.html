@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<head th:insert="/index::head('Dodaj quiz')"></head>
 <body>
+<nav th:insert="/index::nav"></nav>
+<div class="container-sm">
     <form th:action="@{/admin/quiz/create}" method="post" th:object="${quizViewModel}">
         <label>Tytuł</label></br>
         <input type="text" th:field="*{title}" /> <br>
-        <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Errors</span></br>
+        <span class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Errors</span></br>
         <label>Treść pytania</label></br>
         <input type="text" th:field="*{question}" /> <br>
-        <span th:if="${#fields.hasErrors('question')}" th:errors="*{question}">Errors</span></br>
+        <span class="text-danger" th:if="${#fields.hasErrors('question')}" th:errors="*{question}">Errors</span></br>
         <label>Odpowiedzi</label></br>
         <fieldset>
             <input type="checkbox" th:field="*{correctOptions}" value="1"/> <input type="text" th:field="*{options}" /> <br>
@@ -30,5 +29,6 @@
         </select>
         <button type="submit">Zapisz</button>
     </form>
+</div>
 </body>
 </html>

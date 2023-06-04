@@ -1,21 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head th:fragment="head(title)">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="${title}">Tytuł</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css">
+    <script src="/webjars/bootstrap/5.3.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <h1>Hello user!</h1>
-    <ul>
-        <li><a href="/welcome?name=Karol&age=34">Welcome</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/calculator-form">Kalkulator</a></li>
-        <li><a href="/power-form">Podnoszenie do kwadratu</a></li>
-        <li><a href="/quiz/fill?id=2">Quiz nr 2</a></li>
-        <li><a href="/quiz/index">Lista quiz'ów do wypełnienia</a></li>
-        <li><a href="/admin/quiz/index">Lista quiz'ów administratora</a></li>
-        <li><a href="/admin/quiz/create">Dodaj nowy quiz</a></li>
-        <li><a href="/admin/quiz/category/create">Dodaj nową kategorię</a></li>
-    </ul>
+<nav th:fragment="nav" class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/calculator-form">Kalkulator</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Administracja
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/admin/quiz/create">Dodaj quiz</a></li>
+                        <li><a class="dropdown-item" href="/admin/quiz/index">Lista quizów</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/quiz/index">Wybierz quiz do wypełnienia</a>
+                </li>
+            </ul>
+            <form class="d-flex" role="search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
 </body>
 </html>
