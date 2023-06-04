@@ -22,6 +22,8 @@ public class Quiz {
 
     private List<String> correctAnswers;
 
+    private long categoryId;
+
     public boolean isCorrect(List<String> answers){
         HashSet<String> correctSet = new HashSet<>(correctAnswers);
         HashSet<String> answerSet=new HashSet<>(answers);

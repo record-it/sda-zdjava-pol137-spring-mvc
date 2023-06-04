@@ -1,5 +1,6 @@
 package pl.sda.zdjavapol137.mvcspringquiz.service;
 
+import pl.sda.zdjavapol137.mvcspringquiz.entity.Category;
 import pl.sda.zdjavapol137.mvcspringquiz.model.Quiz;
 
 import java.util.List;
@@ -16,4 +17,8 @@ public interface AdminQuizService {
     void updateQuiz(Quiz quiz);
 
     void deleteQuizById(long id);
+
+    void saveCategory(Category category);
+
+    List<Category> findAllCategories();
 }

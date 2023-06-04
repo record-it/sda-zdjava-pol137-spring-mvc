@@ -23,4 +23,6 @@ public class QuizViewModel {
     private List<@NotEmpty String> options;
 
     private List<@NotNull Integer> correctOptions;
+
+    private long categoryId;
 }

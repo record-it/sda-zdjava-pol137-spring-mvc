@@ -1,6 +1,7 @@
 package pl.sda.zdjavapol137.mvcspringquiz.service;
 
 import org.springframework.stereotype.Service;
+import pl.sda.zdjavapol137.mvcspringquiz.entity.Category;
 import pl.sda.zdjavapol137.mvcspringquiz.model.Quiz;
 import pl.sda.zdjavapol137.mvcspringquiz.repository.QuizRepositoryInMemory;
 import java.util.List;
@@ -37,5 +38,15 @@ public class AdminQuizServiceInMemory implements AdminQuizService{
     @Override
     public void deleteQuizById(long id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public void saveCategory(Category category) {
+        throw new RuntimeException("Not implemented");
+    }
+
+    @Override
+    public List<Category> findAllCategories() {
+        throw new RuntimeException("Not implemented");
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import pl.sda.zdjavapol137.mvcspringquiz.entity.Category;
 import pl.sda.zdjavapol137.mvcspringquiz.mapper.QuizMapper;
 import pl.sda.zdjavapol137.mvcspringquiz.model.Quiz;
 import pl.sda.zdjavapol137.mvcspringquiz.model.QuizViewModel;
@@ -30,8 +31,9 @@ public class QuizAdminController implements WebMvcConfigurer {
     // zadeklaruj metode pod ścieżką '/admin/quiz/create',
     // która zwróci widok z formularzem quizu '/quiz/create'
     @GetMapping("/create")
-    public String createForm(Model model){
+    public String createQuizForm(Model model){
         model.addAttribute("quizViewModel", new QuizViewModel());
+        model.addAttribute("categories", quizService.findAllCategories());
         return "/quiz/create";
     }
 
@@ -41,6 +43,7 @@ public class QuizAdminController implements WebMvcConfigurer {
             BindingResult errors,
             Model model){
         if (errors.hasErrors()){
+            model.addAttribute("categories", quizService.findAllCategories());
             return "/quiz/create";
         }
         final Quiz quiz = QuizMapper.mapToQuiz(quizViewModel);
@@ -94,5 +97,21 @@ public class QuizAdminController implements WebMvcConfigurer {
         updatedQuiz.setIncorrectAnswers(optionalQuiz.get().getIncorrectAnswers());
         quizService.updateQuiz(updatedQuiz);
         return "redirect:/admin/quiz/index";
+    }
+
+    // Dodaj metodę (Get) zwracającą widok formularza do tworzenia nowej kategorii
+    // Dodaj widok formularza
+    // Dodaj metodę (Post) odbierającą dane z formularza i zapisująca do serwisu kategorię
+
+    @GetMapping("/category/create")
+    public String createCategoryForm(Model model){
+        model.addAttribute("category", new Category());
+        return "/category/create-form";
+    }
+
+    @PostMapping("/category/create")
+    public String createCategory(Category category){
+        quizService.saveCategory(category);
+        return "redirect:/admin/quiz/create";
     }
 }

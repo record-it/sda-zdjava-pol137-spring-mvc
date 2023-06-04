@@ -6,21 +6,28 @@
 </head>
 <body>
     <form th:action="@{/admin/quiz/create}" method="post" th:object="${quizViewModel}">
-        <label>Tytuł</label>
+        <label>Tytuł</label></br>
         <input type="text" th:field="*{title}" /> <br>
-        <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Errors</span>
-        <label>Treść pytania</label>
+        <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Errors</span></br>
+        <label>Treść pytania</label></br>
         <input type="text" th:field="*{question}" /> <br>
-        <span th:if="${#fields.hasErrors('question')}" th:errors="*{question}">Errors</span>
-        <label>Odpowiedzi</label>
+        <span th:if="${#fields.hasErrors('question')}" th:errors="*{question}">Errors</span></br>
+        <label>Odpowiedzi</label></br>
         <fieldset>
             <input type="checkbox" th:field="*{correctOptions}" value="1"/> <input type="text" th:field="*{options}" /> <br>
             <input type="checkbox" th:field="*{correctOptions}" value="2"/> <input type="text" th:field="*{options}" /> <br>
             <input type="checkbox" th:field="*{correctOptions}" value="3"/> <input type="text" th:field="*{options}" /> <br>
             <input type="checkbox" th:field="*{correctOptions}" value="4"/> <input type="text" th:field="*{options}" /> <br>
         </fieldset>
-        <span th:if="${#fields.hasErrors('options')}" th:errors="*{options}">Errors</span>
-        <span th:if="${#fields.hasErrors('correctOptions')}" th:errors="*{correctOptions}">Errors</span>
+        <span th:if="${#fields.hasErrors('options')}" th:errors="*{options}">Errors</span></br>
+        <span th:if="${#fields.hasErrors('correctOptions')}" th:errors="*{correctOptions}">Errors</span></br>
+        <label>Kategoria</label></br>
+        <select th:field="*{categoryId}">
+            <option
+                    th:each ="category: ${categories}"
+                    th:text="${category.name}"
+                    th:value="${category.id}">1</option>
+        </select>
         <button type="submit">Zapisz</button>
     </form>
 </body>
