@@ -3,23 +3,16 @@ package pl.sda.zdjavapol137.mvcspringquiz;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.jpa.repository.Query;
 import pl.sda.zdjavapol137.mvcspringquiz.entity.Answer;
 import pl.sda.zdjavapol137.mvcspringquiz.entity.Category;
 import pl.sda.zdjavapol137.mvcspringquiz.entity.QuizEntity;
 import pl.sda.zdjavapol137.mvcspringquiz.entity.User;
 import pl.sda.zdjavapol137.mvcspringquiz.mapper.QuizMapper;
-import pl.sda.zdjavapol137.mvcspringquiz.model.Quiz;
-import pl.sda.zdjavapol137.mvcspringquiz.repository.AnswerRepository;
-import pl.sda.zdjavapol137.mvcspringquiz.repository.CategoryRepository;
-import pl.sda.zdjavapol137.mvcspringquiz.repository.QuizRepository;
-import pl.sda.zdjavapol137.mvcspringquiz.repository.UserRepository;
+import pl.sda.zdjavapol137.mvcspringquiz.model.AppUser;
+import pl.sda.zdjavapol137.mvcspringquiz.repository.*;
 import pl.sda.zdjavapol137.mvcspringquiz.service.AdminQuizService;
 
-import javax.management.QueryEval;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
 
 @SpringBootApplication
 public class MvcSpringQuizApplication implements CommandLineRunner {
@@ -28,13 +21,15 @@ public class MvcSpringQuizApplication implements CommandLineRunner {
     private final QuizRepository quizRepository;
     private final UserRepository userRepository;
     private final AnswerRepository answerRepository;
+    private final AppUserRepository appUserRepository;
 
-    public MvcSpringQuizApplication(AdminQuizService service, CategoryRepository categoryRepository, QuizRepository quizRepository, UserRepository userRepository, AnswerRepository answerRepository) {
+    public MvcSpringQuizApplication(AdminQuizService service, CategoryRepository categoryRepository, QuizRepository quizRepository, UserRepository userRepository, AnswerRepository answerRepository, AppUserRepository appUserRepository) {
         this.service = service;
         this.categoryRepository = categoryRepository;
         this.quizRepository = quizRepository;
         this.userRepository = userRepository;
         this.answerRepository = answerRepository;
+        this.appUserRepository = appUserRepository;
     }
 
     public static void main(String[] args) {
@@ -105,6 +100,25 @@ public class MvcSpringQuizApplication implements CommandLineRunner {
                         .userAnswer("7")
                         .quiz(QuizMapper.mapToEntity(service.findQuizById(2).get()))
                         .created(LocalDateTime.now())
+                        .build()
+        );
+        appUserRepository.save(
+                AppUser
+                        .builder()
+                        .roles("USER ADMIN")
+                        .emailAddress("ewa@sda.pl")
+                        .hashedPassword("$2y$10$caPdtwuIXkPUPwJNkzP88uahebHVMYGW1LCH0jw8RD2/Au18jyVV6")
+                        .enabled(true)
+                        .build()
+        );
+
+        appUserRepository.save(
+                AppUser
+                        .builder()
+                        .roles("USER")
+                        .emailAddress("karol@sda.pl")
+                        .hashedPassword("$2y$10$caPdtwuIXkPUPwJNkzP88uahebHVMYGW1LCH0jw8RD2/Au18jyVV6")
+                        .enabled(false)
                         .build()
         );
     }

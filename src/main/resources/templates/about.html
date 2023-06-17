@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<head th:insert="/index::head('Dodaj quiz')"></head>
 <body>
+<nav th:insert="/index.html::nav"></nav>
     <h1>O aplikacji</h1>
     <a href="/">Strona główna</a>
 <!-- uzupełnij link powrotu do strony index-->
+<div th:replace="/index.html::scripts">
 </body>
 </html>

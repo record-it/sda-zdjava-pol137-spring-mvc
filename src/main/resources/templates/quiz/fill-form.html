@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<head th:insert="/index::head('Dodaj quiz')"></head>
 <body>
+<nav th:insert="/index.html::nav"></nav>
     <H1 th:text="${quiz.title}">Tytuł</H1>
     <h3 th:text="${quiz.question}">Pytanie</h3>
     <form action="/quiz/fill" method="post">
@@ -17,5 +15,9 @@
         </fieldset>
         <button type="submit">Zapisz</button>
     </form>
+<div th:replace="/index.html::scripts">
+
+</div>
+<div th:replace="/index.html::scripts">
 </body>
 </html>

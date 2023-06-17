@@ -4,23 +4,30 @@
 </head>
 <body>
 <div class="container-sm">
+    <nav th:insert="/index.html::nav"></nav>
     <form action="/calc" method="get">
         <div class="mb-3">
             <label class="form-label" for="a">Argument 1</label>
-            <input id ="a" class="form-control"type="number" name="a" /> <br>
+            <input id="a" class="form-control" type="number" name="a"/> <br>
         </div>
         <div class="mb-3">
-
-        <select class="form-control" name="op"> <br>
-            <option value="add">+</option>
-            <option value="sub">-</option>
-            <option value="mul">*</option>
-            <option value="div">/</option>
-        </select>
+            <label class="form-label" for="op">Operator</label>
+            <select class="form-control" name="op" id="op"> <br>
+                <option value="add">+</option>
+                <option value="sub">-</option>
+                <option value="mul">*</option>
+                <option value="div">/</option>
+            </select>
         </div>
-        <input type="number" name="b" /> <br>
-        <button class = "btn btn-primary"type="submit">Oblicz</button>
+        <div class="mb-3">
+            <label class="form-label" for="b">Argument 2</label>
+            <input class="form-control" type="number" name="b" id="b"/> <br>
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-primary" type="submit">Oblicz</button>
+        </div>
     </form>
 </div>
+<div th:replace="/index.html::scripts">
 </body>
 </html>

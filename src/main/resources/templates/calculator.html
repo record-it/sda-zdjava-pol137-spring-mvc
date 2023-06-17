@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<head th:insert="/index::head('Dodaj quiz')"></head>
 <body>
+<nav th:insert="/index.html::nav"></nav>
 <h1>Wynik obliczeń kalkulatora</h1>
     <p>
         <span th:text="${calculatorData.a}">3</span>
@@ -14,4 +12,5 @@
         <span th:text="${calculatorData.result}">9</span>
     </p>
 </body>
+<div th:replace="/index.html::scripts">
 </html>

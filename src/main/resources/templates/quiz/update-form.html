@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<head th:insert="/index::head('Dodaj quiz')"></head>
 <body>
+<nav th:insert="/index.html::nav"></nav>
 <form th:action="@{/admin/quiz/update}" method="post" th:object="${quiz}">
     <input type="hidden" th:field="*{id}"/>
     <label>Tytuł</label>
@@ -15,5 +13,8 @@
     <span th:if="${#fields.hasErrors('question')}" th:errors="*{question}">Errors</span>
     <button type="submit">Aktualizuj</button>
 </form>
+<div th:replace="/index.html::scripts">
+
+</div>
 </body>
 </html>

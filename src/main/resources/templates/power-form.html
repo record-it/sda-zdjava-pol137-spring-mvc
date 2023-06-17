@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<head th:insert="/index::head('Dodaj quiz')"></head>
 <body>
+<nav th:insert="/index.html::nav"></nav>
     <h1>Podnoszenie do kwadratu</h1>
     <form action="/power" method="get"><br>
         <input type="number" name="a"><br>
         <button type="submit">Oblicz</button>
     </form>
+<div th:replace="/index.html::scripts">
 </body>
 </html>
