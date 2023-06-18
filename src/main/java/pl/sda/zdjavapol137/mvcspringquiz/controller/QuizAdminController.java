@@ -1,6 +1,8 @@
 package pl.sda.zdjavapol137.mvcspringquiz.controller;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

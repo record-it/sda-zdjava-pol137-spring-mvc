@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:insert="/index::head('Dodaj quiz')"></head>
+<body>
+<nav th:insert="/index.html::nav"></nav>
+<h1>Błąd</h1>
+<div class="alert alert-danger" role="alert">
+    <span th:text="${message}">simple danger alert—check it out!</span>
+</div>
+
+<div th:replace="/index.html::scripts">
+</div>
+</body>
+</html>

@@ -118,7 +118,7 @@ public class MvcSpringQuizApplication implements CommandLineRunner {
                         .roles("USER")
                         .emailAddress("karol@sda.pl")
                         .hashedPassword("$2y$10$caPdtwuIXkPUPwJNkzP88uahebHVMYGW1LCH0jw8RD2/Au18jyVV6")
-                        .enabled(false)
+                        .enabled(true)
                         .build()
         );
     }
